@@ -15,15 +15,28 @@ const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-// starting condition
-score0El.textContent = 0;
-score1El.textContent = 0;
-diceEl.classList.add('hidden');
 
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
-const score = [0, 0];
+let score, currentScore,activePlayer,playing;
+
+// starting condition
+const init = () => {
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
+  score = [0, 0];
+  
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  diceEl.classList.add('hidden');
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+};
+init();
 
 // switch to the next player / -> refactoring code
 const switchPlayer = () => {
@@ -69,8 +82,8 @@ btnHold.addEventListener('click', () => {
       score[activePlayer];
     // 2. check if player score >=100
     if (score[activePlayer] >= 50) {
-        playing=false;
-        diceEl.classList.add('hidden');
+      playing = false;
+      diceEl.classList.add('hidden');
       document
         .querySelector(`.player--${activePlayer}`)
         .classList.add('player--winner');
@@ -84,3 +97,5 @@ btnHold.addEventListener('click', () => {
   }
 });
 // finish the game
+
+btnNew.addEventListener('click', init);
